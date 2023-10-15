@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:quick_blue/quick_blue.dart';
-import 'package:flutter_application_1/constants/constants.dart';
+import 'package:flutter_draft/constants/constants.dart';
 
 part 'ble_scan_results.dart';
 

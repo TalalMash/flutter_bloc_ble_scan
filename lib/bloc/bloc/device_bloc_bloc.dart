@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_application_1/repo/ble_device_scan.dart';
+import 'package:flutter_draft/repo/ble_device_scan.dart';
 import 'package:meta/meta.dart';
 import 'package:quick_blue/quick_blue.dart';
 
