@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  firebase_core
+  quick_blue
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
