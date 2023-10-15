@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_draft/repo/ble_device_scan.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_draft/bloc/bloc/device_bloc_bloc.dart';
-// import 'package:quick_blue/quick_blue.dart';
 
 void main() {
   Bloc.observer = AppBlocObserver();

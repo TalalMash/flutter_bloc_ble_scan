@@ -1,1 +1,1 @@
-const int rssiThreshold = -75;
+const int rssiThreshold = -175;
