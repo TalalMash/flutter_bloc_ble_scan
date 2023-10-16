@@ -1,4 +1,4 @@
-part of 'device_bloc_bloc.dart';
+part of 'quick_ble_bloc.dart';
 
 @immutable
 sealed class DeviceBlocState extends Equatable {

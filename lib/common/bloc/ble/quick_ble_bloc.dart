@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_draft/repo/ble_device_scan.dart';
+import 'package:flutter_draft/common/repositories/quick_ble/quick_ble.dart';
 import 'package:meta/meta.dart';
 import 'package:quick_blue/quick_blue.dart';
 
-part 'device_bloc_event.dart';
-part 'device_bloc_state.dart';
+part 'quick_ble_event.dart';
+part 'quick_ble_state.dart';
 
 class DeviceBloc extends Bloc<DeviceBlocEvent, DeviceBlocState> {
   final BluetoothRepository _bleRepo;
