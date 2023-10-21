@@ -10,14 +10,16 @@ part 'quick_ble_state.dart';
 
 class DeviceBloc extends Bloc<DeviceBlocEvent, DeviceBlocState> {
   final BluetoothRepository _bleRepo;
-  StreamSubscription<List<BlueScanResult>>? _repoSubscription;
+  StreamSubscription<List<BlueScanResult>>? _scanResultSubscription;
+  StreamSubscription<bool>? _scanStatusSubscription;
   static final List<BlueScanResult> _deviceList = [];
+  static const bool _scanStatus = false;
 
   DeviceBloc({required BluetoothRepository bleRepo})
       : _bleRepo = bleRepo,
-        super(DeviceBlocScanResults(_deviceList)) {
+        super(DeviceBlocScanResults(_deviceList, _scanStatus)) {
     on<DeviceBlocScanUpdates>(
-      (_, emit) => emit(DeviceBlocScanResults(_.deviceList)),
+      (_, emit) => emit(DeviceBlocScanResults(_.deviceList, _.scanStatus)),
     );
     on<DeviceBlocScanStopped>(_onScanStop);
     on<DeviceBlocScanStarted>(_onScanStart);
@@ -25,24 +27,26 @@ class DeviceBloc extends Bloc<DeviceBlocEvent, DeviceBlocState> {
 
   void _onScanStop(_, emit) {
     _bleRepo.stopScan();
-    _repoSubscription?.cancel();
-
-    add(DeviceBlocScanUpdates(deviceList: _deviceList));
+    _scanResultSubscription?.cancel();
+    _scanStatusSubscription?.cancel();
   }
 
   void _onScanStart(_, emit) {
-    // Future.delayed(const Duration(milliseconds: 5500), () {
     _bleRepo.startScan();
-    _repoSubscription?.cancel();
-    _repoSubscription = _bleRepo.scanResults
-        .listen((devices) => add(DeviceBlocScanUpdates(deviceList: devices)));
-    // });
+    _onScanStop;
+    _scanResultSubscription = _bleRepo.scanResults.listen(
+      (devices) =>
+          add(DeviceBlocScanUpdates(deviceList: devices, scanStatus: false)),
+    );
+    _scanStatusSubscription = _bleRepo.scanFinished.listen((status) {
+      add(DeviceBlocScanUpdates(
+          deviceList: state.deviceList, scanStatus: status));
+    });
   }
 
   @override
   Future<void> close() {
-    _repoSubscription?.cancel();
-    _bleRepo.stopScan();
+    _onScanStop;
     return super.close();
   }
 }

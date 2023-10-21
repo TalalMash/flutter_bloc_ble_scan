@@ -14,13 +14,15 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           theme: ThemeData(),
           darkTheme: ThemeData.dark(),
-          themeMode: ThemeMode.system,
+          themeMode: test1 ? ThemeMode.dark : ThemeMode.light,
           home: const DeviceListScreen(),
         ),
       ),
     );
   }
 }
+
+var test1 = false;
 
 class DeviceListScreen extends StatefulWidget {
   const DeviceListScreen({super.key});

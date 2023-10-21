@@ -6,8 +6,10 @@ sealed class DeviceBlocEvent {
 }
 
 final class DeviceBlocScanUpdates extends DeviceBlocEvent {
-  const DeviceBlocScanUpdates({required this.deviceList});
+  const DeviceBlocScanUpdates(
+      {required this.deviceList, required this.scanStatus});
   final List<BlueScanResult> deviceList;
+  final bool scanStatus;
 }
 
 final class DeviceBlocScanStopped extends DeviceBlocEvent {}
