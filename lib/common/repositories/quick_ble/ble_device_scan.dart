@@ -16,6 +16,6 @@ class BluetoothRepository {
   Future<void> stopScan() async {
     QuickBlue.stopScan();
     _scanResultSubscription?.cancel();
-    _scanResultController.add([]);
+    currentList.clear();
   }
 }
