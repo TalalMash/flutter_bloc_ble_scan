@@ -35,6 +35,7 @@ class DeviceListScreenState extends State<DeviceListScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    context.read<DeviceBloc>().add(DeviceBlocScanStarted());
   }
 
   @override
@@ -46,9 +47,9 @@ class DeviceListScreenState extends State<DeviceListScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      context.read<DeviceBloc>().add(DeviceBlocPaused());
+      context.read<DeviceBloc>().add(DeviceBlocScanStopped());
     } else if (state == AppLifecycleState.resumed) {
-      context.read<DeviceBloc>().add(DeviceBlocResumed());
+      context.read<DeviceBloc>().add(DeviceBlocScanStarted());
     }
   }
 
@@ -60,9 +61,6 @@ class DeviceListScreenState extends State<DeviceListScreen>
       ),
       body: BlocBuilder<DeviceBloc, DeviceBlocState>(
         builder: (context, state) {
-          context
-              .read<DeviceBloc>()
-              .add(DeviceBlocStarted(deviceList: state.deviceList));
           return ListView.builder(
             itemCount: state.deviceList.length,
             itemBuilder: (context, index) {

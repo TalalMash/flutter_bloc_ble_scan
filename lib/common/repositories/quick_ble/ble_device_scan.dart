@@ -8,14 +8,14 @@ class BluetoothRepository {
   Stream<List<BlueScanResult>> get scanResults => _scanResultController.stream;
 
   Future<void> startScan() async {
-    QuickBlue.stopScan();
     await QuickBlue.startScan();
     _scanResultSubscription?.cancel();
     _handleScanResults();
   }
 
   Future<void> stopScan() async {
-    _scanResultSubscription?.cancel();
     QuickBlue.stopScan();
+    _scanResultSubscription?.cancel();
+    _scanResultController.add([]);
   }
 }

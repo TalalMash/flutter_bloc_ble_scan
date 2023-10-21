@@ -9,14 +9,6 @@ sealed class DeviceBlocState extends Equatable {
   List<Object> get props => [deviceList];
 }
 
-final class DeviceBlocInitial extends DeviceBlocState {
-  const DeviceBlocInitial(super.deviceList);
-}
-
-final class DeviceBlocStart extends DeviceBlocState {
-  const DeviceBlocStart(super.deviceList);
-}
-
-final class DeviceBlocStop extends DeviceBlocState {
-  const DeviceBlocStop(super.deviceList);
+final class DeviceBlocScanResults extends DeviceBlocState {
+  const DeviceBlocScanResults(super.deviceList);
 }

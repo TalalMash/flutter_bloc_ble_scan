@@ -15,20 +15,28 @@ class DeviceBloc extends Bloc<DeviceBlocEvent, DeviceBlocState> {
 
   DeviceBloc({required BluetoothRepository bleRepo})
       : _bleRepo = bleRepo,
-        super(DeviceBlocInitial(_deviceList)) {
-    _bleRepo.startScan();
-    on<DeviceBlocStarted>(_onStarted);
-    on<DeviceBlocPaused>(_onPause);
-    on<DeviceBlocResumed>(_onResume);
+        super(DeviceBlocScanResults(_deviceList)) {
+    on<DeviceBlocScanUpdates>(
+      (_, emit) => emit(DeviceBlocScanResults(_.deviceList)),
+    );
+    on<DeviceBlocScanStopped>(_onScanStop);
+    on<DeviceBlocScanStarted>(_onScanStart);
   }
 
-  void _onPause(DeviceBlocPaused event, Emitter<DeviceBlocState> emit) {
-    emit(const DeviceBlocStart([]));
+  void _onScanStop(_, emit) {
     _bleRepo.stopScan();
+    _repoSubscription?.cancel();
+
+    add(DeviceBlocScanUpdates(deviceList: _deviceList));
   }
 
-  void _onResume(DeviceBlocResumed event, Emitter<DeviceBlocState> emit) {
+  void _onScanStart(_, emit) {
+    // Future.delayed(const Duration(milliseconds: 5500), () {
     _bleRepo.startScan();
+    _repoSubscription?.cancel();
+    _repoSubscription = _bleRepo.scanResults
+        .listen((devices) => add(DeviceBlocScanUpdates(deviceList: devices)));
+    // });
   }
 
   @override
@@ -36,12 +44,5 @@ class DeviceBloc extends Bloc<DeviceBlocEvent, DeviceBlocState> {
     _repoSubscription?.cancel();
     _bleRepo.stopScan();
     return super.close();
-  }
-
-  void _onStarted(DeviceBlocStarted event, Emitter<DeviceBlocState> emit) {
-    emit(DeviceBlocStart(event.deviceList));
-    _repoSubscription?.cancel();
-    _repoSubscription = _bleRepo.scanResults
-        .listen((devices) => add(DeviceBlocStarted(deviceList: devices)));
   }
 }
