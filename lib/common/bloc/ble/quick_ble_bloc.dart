@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_draft/common/repositories/quick_ble/quick_ble.dart';
-import 'package:meta/meta.dart';
 import 'package:quick_blue/quick_blue.dart';
+import 'package:flutter_draft/common/common.dart';
 
 part 'quick_ble_event.dart';
 part 'quick_ble_state.dart';

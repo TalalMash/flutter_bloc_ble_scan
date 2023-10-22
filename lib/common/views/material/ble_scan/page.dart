@@ -1,28 +1,4 @@
 import 'package:flutter_draft/common/common.dart';
-import 'package:flutter_draft/common/repositories/quick_ble/quick_ble.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => BluetoothRepository(),
-      child: BlocProvider(
-        create: (context) => DeviceBloc(
-            bleRepo: RepositoryProvider.of<BluetoothRepository>(context)),
-        child: MaterialApp(
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
-          themeMode: test1 ? ThemeMode.dark : ThemeMode.light,
-          home: const DeviceListScreen(),
-        ),
-      ),
-    );
-  }
-}
-
-var test1 = false;
 
 class DeviceListScreen extends StatefulWidget {
   const DeviceListScreen({super.key});
@@ -61,19 +37,34 @@ class DeviceListScreenState extends State<DeviceListScreen>
       appBar: AppBar(
         title: const Text('Available Devices'),
       ),
-      body: BlocBuilder<DeviceBloc, DeviceBlocState>(
-        builder: (context, state) {
-          return ListView.builder(
-            itemCount: state.deviceList.length,
-            itemBuilder: (context, index) {
-              final device = state.deviceList[index];
-              return ListTile(
-                title: Text("${device.manufacturerDataHead.toString()}"),
-                subtitle: Text("Signal: ${device.rssi.toString()}"),
-              );
-            },
-          );
-        },
+      body: Center(
+        child: BlocBuilder<DeviceBloc, DeviceBlocState>(
+          builder: (context, state) {
+            // context.watch<DeviceBloc>().state.scanStatus
+            //     ? context.read<ThemeCubit>().toggleTheme()
+            //     : null;
+            return ListView.builder(
+              itemCount: state.deviceList.length,
+              itemBuilder: (context, index) {
+                final device = state.deviceList[index];
+                return ListTile(
+                  title: Text(device.manufacturerDataHead.toString()),
+                  subtitle: Text("Signal: ${device.rssi.toString()}"),
+                );
+              },
+            );
+          },
+        ),
+      ),
+      floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            child: const Icon(Icons.brightness_6),
+            onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+          ),
+        ],
       ),
     );
   }

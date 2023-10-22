@@ -1,2 +1,2 @@
 const int rssiThreshold = -155;
-const int scanInterval = 30;
+const int scanInterval = 5;
