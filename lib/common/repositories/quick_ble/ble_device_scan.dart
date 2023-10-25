@@ -10,6 +10,7 @@ class BluetoothRepository {
   StreamSubscription<AvailabilityState>? _availabilitySubscription;
 
   final _scanFinishedController = StreamController<bool>.broadcast();
+  late Timer _scanTimeout;
 
   Future<void> startScan() async {
     currentList.clear();
@@ -21,14 +22,14 @@ class BluetoothRepository {
       }
     });
     _handleScanResults();
-    await Future.delayed(const Duration(seconds: scanInterval), () {
-      stopScan();
-      _scanFinishedController.add(true);
-    });
+    _scanTimeout =
+        Timer(const Duration(seconds: scanInterval), () => stopScan());
   }
 
   Future<void> stopScan() async {
     QuickBlue.stopScan();
+    _scanTimeout.cancel();
+    _scanFinishedController.add(true);
     _scanResultSubscription?.cancel();
     _availabilitySubscription?.cancel();
   }
