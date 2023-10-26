@@ -13,7 +13,7 @@ class DeviceListScreenState extends State<DeviceListScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    context.read<DeviceBloc>().add(DeviceBlocScanStarted());
+    // context.read<DeviceBloc>().add(DeviceBlocScanStarted());
   }
 
   @override
@@ -25,10 +25,9 @@ class DeviceListScreenState extends State<DeviceListScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
+      //TODO replace this with applifcycle bloc
       context.read<DeviceBloc>().add(DeviceBlocScanStopped());
-    } else if (state == AppLifecycleState.resumed) {
-      context.read<DeviceBloc>().add(DeviceBlocScanStarted());
-    }
+    } else if (state == AppLifecycleState.resumed) {}
   }
 
   @override
@@ -40,9 +39,6 @@ class DeviceListScreenState extends State<DeviceListScreen>
       body: Center(
         child: BlocBuilder<DeviceBloc, DeviceBlocState>(
           builder: (context, state) {
-            // context.watch<DeviceBloc>().state.scanStatus
-            //     ? context.read<ThemeCubit>().toggleTheme()
-            //     : null;
             return ListView.builder(
               itemCount: state.deviceList.length,
               itemBuilder: (context, index) {
@@ -65,6 +61,16 @@ class DeviceListScreenState extends State<DeviceListScreen>
             child: const Icon(Icons.brightness_6),
             onPressed: () => context.read<ThemeCubit>().toggleTheme(),
           ),
+          FloatingActionButton(
+            child: const Icon(Icons.play_arrow),
+            onPressed: () =>
+                context.read<DeviceBloc>().add(DeviceBlocScanStarted()),
+          ),
+          FloatingActionButton(
+            child: const Icon(Icons.stop),
+            onPressed: () =>
+                context.read<DeviceBloc>().add(DeviceBlocScanStopped()),
+          )
         ],
       ),
     );

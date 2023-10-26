@@ -32,7 +32,6 @@ class DeviceBloc extends Bloc<DeviceBlocEvent, DeviceBlocState> {
 
   void _onScanStart(_, emit) {
     _bleRepo.startScan();
-    _onScanStop;
     _scanResultSubscription = _bleRepo.scanResults.listen(
       (devices) =>
           add(DeviceBlocScanUpdates(deviceList: devices, scanStatus: false)),
