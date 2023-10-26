@@ -50,16 +50,20 @@ class BluetoothRepository {
   Future<void> startScan() async {
     blocList.clear();
     currentList.clear();
-    if (await Permission.locationWhenInUse.request().isGranted) {
-      _bluetoothReady = await QuickBlue.isBluetoothAvailable();
-      if (_bluetoothReady) {
-        print("DONE + ${_bluetoothReady}");
-        QuickBlue.startScan();
-        _handleScanResults();
-        _scanTimeout =
-            Timer(const Duration(seconds: scanInterval), () => stopScan());
-      }
+    Permission.bluetoothScan.request();
+    Permission.bluetoothScan.request();
+    Permission.locationWhenInUse.request();
+    Permission.locationAlways.request();
+    // if (await Permission.locationWhenInUse.request().isGranted) {
+    _bluetoothReady = await QuickBlue.isBluetoothAvailable();
+    if (_bluetoothReady) {
+      print("DONE + ${_bluetoothReady}");
+      QuickBlue.startScan();
+      _handleScanResults();
+      _scanTimeout =
+          Timer(const Duration(seconds: scanInterval), () => stopScan());
     }
+    // }
   }
 
   Future<void> stopScan() async {
