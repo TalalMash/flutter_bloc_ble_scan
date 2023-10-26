@@ -2,10 +2,11 @@ part of 'ble_device_scan.dart';
 
 StreamSubscription<BlueScanResult>? _scanResultSubscription;
 
-final StreamController<List<BlueScanResult>> _scanResultController =
-    StreamController<List<BlueScanResult>>.broadcast();
+final StreamController<List<BlocScanResult>> _scanResultController =
+    StreamController<List<BlocScanResult>>.broadcast();
 
 List<BlueScanResult> currentList = [];
+List<BlocScanResult> blocList = [];
 
 void _handleScanResults() {
   _scanResultSubscription = QuickBlue.scanResultStream.listen((device) {
@@ -14,13 +15,17 @@ void _handleScanResults() {
 
     if (device.rssi > rssiThreshold) {
       if (deviceIndex == -1) {
-        currentList.add(device);
+        currentList.add((device));
       } else {
         currentList[deviceIndex] = device;
       }
     } else if (deviceIndex != -1) {
       currentList.removeAt(deviceIndex);
     }
-    _scanResultController.add(currentList.toList());
+
+    List<BlocScanResult> blocList = currentList.map((element) {
+      return BlocScanResult(element.manufacturerData, element.rssi);
+    }).toList();
+    _scanResultController.add(blocList);
   });
 }

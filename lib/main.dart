@@ -1,12 +1,8 @@
 import 'package:flutter_draft/common/common.dart';
-import 'package:quick_blue/quick_blue.dart';
 
 void main() {
   Bloc.observer = AppBlocObserver();
   runApp(const MyApp());
-  QuickBlue.availabilityChangeStream.listen((state) {
-    debugPrint('Bluetooth state: ${state.toString()}');
-  });
 }
 
 /// Custom [BlocObserver] that observes all bloc and cubit state changes.

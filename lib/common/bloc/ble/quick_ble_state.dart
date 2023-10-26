@@ -3,7 +3,7 @@ part of 'quick_ble_bloc.dart';
 @immutable
 sealed class DeviceBlocState extends Equatable {
   const DeviceBlocState(this.deviceList, this.scanStatus);
-  final List<BlueScanResult> deviceList;
+  final List<BlocScanResult> deviceList;
   final bool scanStatus;
 
   @override
