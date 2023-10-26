@@ -24,7 +24,8 @@ void _handleScanResults() {
     }
 
     List<BlocScanResult> blocList = currentList.map((element) {
-      return BlocScanResult(element.manufacturerData, element.rssi);
+      return BlocScanResult(element.manufacturerData, element.deviceId,
+          element.name, element.rssi);
     }).toList();
     _scanResultController.add(blocList);
   });
