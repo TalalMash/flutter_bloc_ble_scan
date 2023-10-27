@@ -58,6 +58,8 @@ class BluetoothRepository {
     _bluetoothReady = await QuickBlue.isBluetoothAvailable();
     if (_bluetoothReady) {
       print("DONE + ${_bluetoothReady}");
+      QuickBluePlatform newPlatform = QuickBluePlatform.instance;
+      QuickBlue.setInstance(newPlatform);
       QuickBlue.startScan();
       _handleScanResults();
       _scanTimeout =
