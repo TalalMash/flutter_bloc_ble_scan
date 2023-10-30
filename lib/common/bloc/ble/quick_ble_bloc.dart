@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:bloc_event_transformers/bloc_event_transformers.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_draft/common/repositories/quick_ble/models/bloc_scan_result.dart';
 import 'package:flutter_draft/common/repositories/quick_ble/quick_ble.dart';
