@@ -44,7 +44,7 @@ class DeviceListScreenState extends State<DeviceListScreen>
               itemBuilder: (context, index) {
                 final device = state.deviceList[index];
                 return ListTile(
-                  title: Text(device.deviceId.toString()),
+                  title: Text(device.manufacturerData.toString()),
                   subtitle: Text("Signal: ${device.rssi.toString()}"),
                 );
               },

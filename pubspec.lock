@@ -264,8 +264,8 @@ packages:
     description:
       path: "packages/quick_blue"
       ref: HEAD
-      resolved-ref: "634decd711200c7372686a14047bc023a7cd85d4"
-      url: "https://github.com/woodemi/quick.flutter/"
+      resolved-ref: f3409a84f57ad4e324e82eff60ee0674929e392b
+      url: "https://github.com/TalalMash/quick.flutter/"
     source: git
     version: "0.0.1"
   rxdart:

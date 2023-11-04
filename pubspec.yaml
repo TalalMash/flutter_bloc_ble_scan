@@ -18,7 +18,7 @@ dependencies:
   provider: ^6.0.5
   quick_blue:
     git: 
-      url: "https://github.com/woodemi/quick.flutter/"
+      url: "https://github.com/TalalMash/quick.flutter/"
       path: packages/quick_blue
   rxdart: ^0.27.7
 
