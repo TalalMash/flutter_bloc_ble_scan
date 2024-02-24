@@ -1,3 +1,1 @@
-# flutter_draft
-
-A new Flutter project.
+Quick Blue BLOC Example
